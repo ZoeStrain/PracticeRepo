@@ -1,0 +1,75 @@
+---
+title: "Zoe Strain - Project 1"
+output: html_document
+date: "2022-09-20"
+---
+
+```{r global_options, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(fig.height=4, fig.width=5, tidy=TRUE, tidy.opts=list(width.cutoff=60))
+library(knitr)
+library(tidyverse)
+```
+
+```{r echo=FALSE}
+hospitals <- read.csv('Project1_hospitals.csv')
+
+Experience_Adjusted <- hospitals[hospitals$Rating.Experience != 'None',] 
+Experience_Final <- Experience_Adjusted[Experience_Adjusted$Rating.Overall != -1,]
+
+Mortality_Adjusted <- hospitals[hospitals$Rating.Mortality != 'None',]
+Mortality_Final <- Mortality_Adjusted[Mortality_Adjusted$Rating.Overall != -1,]
+
+Effectiveness_Adjusted <- hospitals[hospitals$Rating.Effectiveness != 'None',]
+Effectiveness_Final <- Effectiveness_Adjusted[Effectiveness_Adjusted$Rating.Overall != -1,]
+```
+
+## Introduction  
+
+The dataset being investigated is about various aspects of hospital experiences, including quality ratings and procedure costs, at facilities across the United States. The data was obtained by [The Centers for Medicare and Medicaid Services](www.cms.gov) and contains variables describing the facilities (i.e. name, city, state, type), ratings (i.e. mortality, experience, effectiveness, timeliness, overall, etc.), and procedural statistics (i.e. cost, quality, value).
+
+The outcome variable in this analysis is the overall rating variable that depicts the rating of a hospital as a whole based on all the factors examined. The three predictor variables are the mortality, experience, and effectiveness ratings. The predictor variables each can be rated into three categories: "Above", "Same", or "Below" as compared to the national average for the variable in question.
+
+![Image from Shutterstock](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fthink.kera.org%2Fwp-content%2Fuploads%2F2017%2F01%2Fshutterstock_298737923.jpg&f=1&nofb=1)  
+
+## Overall Rating as the Outcome Variable  
+
+```{r echo=FALSE}
+hist(Experience_Final$Rating.Overall, main='Distribution of Overall Hospital Ratings', xlab='Overall Rating')
+summary(Experience_Final$Rating.Overall)
+```
+
+The histogram displays the distribution of the outcome variable, the overall rating for each hospital, conveying that the data is roughly symmetric and bell-shaped so there is a higher frequency of values in the middle than the more extreme values.  
+
+
+## Experience Rating as a Predictor Variable  
+  
+```{r echo=FALSE}
+boxplot(Experience_Final$Rating.Overall~Experience_Final$Rating.Experience, main='Overall Rating Based on Experience Rating',ylab='Overall Rating',xlab='Experience Rating', col=c('#0571b0','#ca0020'), pch=20)
+```
+
+The boxplots display that the hospitals with below average experience ratings have significantly lower overall ratings than those with average and above average experience ratings, which appear to have similar distributions of overall ratings but different medians, with the above average group being greater. All the groups have the same range and interquartile range, meaning that the data is spread in a similar manner for each.
+
+
+## Mortality Rating as a Predictor Variable  
+
+```{r echo=FALSE}
+boxplot(Mortality_Final$Rating.Overall~Mortality_Final$Rating.Mortality, main='Overall Rating Based on Mortality Rating',ylab='Overall Rating',xlab='Mortality Rating', col=c('#0571b0','#ca0020'), pch=20)
+```
+
+The boxplots display that the hospitals with below average mortality ratings tend to have lower overall ratings than those above average. The average group had a larger range and interquartile range, so the data was more spread out and varied, but a median between those of the above and below average groups.
+
+
+## Effectiveness Rating as a Predictor Variable  
+
+```{r echo=FALSE}
+boxplot(Effectiveness_Final$Rating.Overall~Effectiveness_Final$Rating.Effectiveness, main='Overall Rating Based on Effectiveness Rating',ylab='Overall Rating',xlab='Effectiveness Rating', col=c('#0571b0','#ca0020'), pch=20)
+```
+
+The boxplots display that the below average group tends to have a lower overall rating as well while the average and above average groups appear to have identical distributions that have larger ranges and interquartile ranges than that of the below average group, so the below average group had less variation and a more clustered spread of data.
+
+## Conclusion
+
+The data seems to suggest that having below average ratings for any of the three predictor variables correlates with lower overall ratings but the extent of the influence varies. For the "Same" and "Above" groups, there appeared to be a weaker connection to the overall ratings, seeing as how one of the three predictors showed identical distributions for both of these groups, conveying that there may be less of a difference between the two groups. Conversely, the "Below" group across all the predictors appeared to have the strongest tie to the overall ratings seeing as how it had significantly lower distributions across each. Between the predictor variables, Mortality Rating may have had the strongest correlation to the outcome variable since it had the most variety in terms of distribution, with variation in median, range, and spread between each. In summary, each predictor did seem to exhibit a correlation to the outcome variable, with Experience and Mortality Ratings appearing stronger than the Effectiveness Rating, but correlation does not necessarily equate to causation.
+
+Future research could be done investigating ratings further on a more detailed quantitative scale. Additionally, data could be collected on factors such as equity, empathy, or even more specific, down to individual employees such as more compassionate doctors in one hospital and more patient nurses in another.
+
