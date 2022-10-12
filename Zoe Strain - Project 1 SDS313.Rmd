@@ -73,3 +73,4 @@ The data seems to suggest that having below average ratings for any of the three
 
 Future research could be done investigating ratings further on a more detailed quantitative scale. Additionally, data could be collected on factors such as equity, empathy, or even more specific, down to individual employees such as more compassionate doctors in one hospital and more patient nurses in another.
 
+editing my rmd file
